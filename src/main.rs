@@ -1,9 +1,9 @@
+use simple_web_server::ThreadPool;
 use std::{
     fs,
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
 };
-use simple_web_server::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap(); // Binding to port 7878 to prevent conflicts
@@ -24,9 +24,9 @@ fn handle_connection(mut stream: TcpStream) {
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
     let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
-        ("HTTP/1.1 200 OK","index.html")
+        ("HTTP/1.1 200 OK", "index.html")
     } else {
-        ("HTTP/1.1 404 NOT FOUND","404.html")
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
     let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
